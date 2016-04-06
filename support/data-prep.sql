@@ -7,6 +7,7 @@ CREATE TABLE person (
   lastName VARCHAR(255) NOT NULL,
   gender ENUM('male', 'female') NOT NULL,
   dateOfBirth DATE NOT NULL,
+  expiresAt DATETIME DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE address (
@@ -16,6 +17,7 @@ CREATE TABLE address (
   state VARCHAR(50) NOT NULL,
   postalCode VARCHAR(10) NOT NULL,
   country VARCHAR(100) NOT NULL,
+  expiresAt DATETIME DEFAULT NULL,
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE person_address (

@@ -15,12 +15,20 @@ public class PersonController {
 
     @RequestMapping("/person")
     public Iterable<Person> listPeople() {
-        return personRepository.findAll();
+        return personRepository.findByExpiresAtIsNull();
     }
 
     @RequestMapping("/person/{id}")
-    public Person getPerson(@PathVariable int id) {
-        return personRepository.findOne(id);
+    public ResponseEntity<Person> getPerson(@PathVariable int id) {
+        ResponseEntity<Person> response;
+        Person person = personRepository.findOneByIdAndExpiresAtIsNull(id);
+        if (person == null) {
+            response = new ResponseEntity<Person>(person, HttpStatus.NOT_FOUND);
+        } else {
+            response = new ResponseEntity<Person>(person, HttpStatus.OK);
+        }
+
+        return response;
     }
 
     @RequestMapping(value = "/person/{id}", method = RequestMethod.PUT)

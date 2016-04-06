@@ -33,6 +33,8 @@ public class Person {
     private Gender gender;
     @Column(name="dateOfBirth")
     private Date dateOfBirth;
+    @Column(name="expiresAt")
+    private Date expiresAt;
     // TODO: Can't get this to work, so settling for an alternative solution
     // See: https://en.wikibooks.org/wiki/Java_Persistence/OneToOne#Example_of_simulating_a_OneToOne_using_a_OneToMany_JoinTable
 //    @OneToOne
@@ -87,6 +89,14 @@ public class Person {
 
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Date getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(Date expiresAt) {
+        this.expiresAt = expiresAt;
     }
 
     // TODO: Remove this and fix the JPA annotations above
