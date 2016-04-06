@@ -1,9 +1,9 @@
 package net.nicksawyer.addressbook.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import net.nicksawyer.addressbook.dao.PersonRepository;
 import net.nicksawyer.addressbook.model.Person;
@@ -21,5 +21,22 @@ public class PersonController {
     @RequestMapping("/person/{id}")
     public Person getPerson(@PathVariable int id) {
         return personRepository.findOne(id);
+    }
+
+    @RequestMapping(value = "/person/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Person> updatePerson(@PathVariable int id, @RequestBody Person person) {
+        ResponseEntity<Person> response;
+        if (id != person.getId()) {
+            response = new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        if (personRepository.findOne(id) == null) {
+            response = new ResponseEntity<Person>(person, HttpStatus.BAD_REQUEST);
+            return response;
+        }
+        Person updated = personRepository.save(person);
+        response = new ResponseEntity<Person>(updated, HttpStatus.OK);
+
+        return response;
     }
 }
