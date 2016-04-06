@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,10 +42,10 @@ public class Person {
 //               joinColumns=@JoinColumn(name="address_id"),
 //               inverseJoinColumns=@JoinColumn(name="person_id"))
 //    private Address address;
-    @OneToMany
+    @ManyToMany
     @JoinTable(name="person_address",
-               joinColumns=@JoinColumn(name="address_id"),
-               inverseJoinColumns=@JoinColumn(name="person_id"))
+               joinColumns=@JoinColumn(name="person_id"),
+               inverseJoinColumns=@JoinColumn(name="address_id"))
     private List<Address> addresses;
 
     public Person() {

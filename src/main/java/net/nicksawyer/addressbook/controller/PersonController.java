@@ -1,5 +1,6 @@
 package net.nicksawyer.addressbook.controller;
 
+import net.nicksawyer.addressbook.model.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import net.nicksawyer.addressbook.dao.PersonRepository;
 import net.nicksawyer.addressbook.model.Person;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class PersonController {
@@ -57,7 +60,9 @@ public class PersonController {
         }
         existing.setExpiresAt(new Date());
         personRepository.save(existing);
+        // Remove the ID to insert a new entity
         person.setId(null);
+        // Save new entity
         Person updated = personRepository.save(person);
         response = new ResponseEntity<Person>(updated, HttpStatus.OK);
 
